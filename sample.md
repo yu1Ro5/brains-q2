@@ -3,8 +3,18 @@ marp: true
 theme: gaia
 _class: lead
 paginate: true
-backgroundColor: #fff
-backgroundImage: url('https://marp.app/assets/hero-background.jpg')
+style: |
+    h1, h2, h3, h4, h5, header, footer {
+        color: black;
+    }
+    section {
+        # background-color: white;
+        font-family: 'Noto Sans CJK JP Regular';
+        color: black;
+        font-size: 18px;
+    }
+# backgroundColor: #fff
+# backgroundImage: url('https://marp.app/assets/hero-background.jpg')
 ---
 
 ![bg left:40% 80%](https://marp.app/assets/marp.svg)
@@ -33,7 +43,10 @@ foobar
 foobar
 ```
 ---
-
+<style>
+h1 {font-size: 40px;}
+{font-size: 20px;}
+</style>
 # 自己紹介
 
 * yu340102
