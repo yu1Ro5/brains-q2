@@ -1,6 +1,7 @@
 .vscode/*
 datasets/*
-*.svg
-*.png
+profile.svg
+brains4_lb.png
+omg.png
 *.jpg
 *.pptx
