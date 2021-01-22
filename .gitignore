@@ -1,2 +1,6 @@
 .vscode/*
 datasets/*
+*.svg
+*.png
+*.jpg
+*.pptx
