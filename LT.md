@@ -1,120 +1,141 @@
 ---
 marp: true
-theme: gaia
-header: "**Q2 1st LT**"
-footer: "by **yu340102**"
-paginate: True
+theme: test
+---
 
+![bg left:40% 80%](https://marp.app/assets/marp.svg)
+
+# **Marp**
+
+Markdown Presentation Ecosystem
+
+https://marp.app/
+
+---
+
+# How to write slides
+
+Split pages by horizontal ruler (`---`). It's very simple! :satisfied:
+
+```markdown
+# Slide 1
+
+foobar
+
+---
+
+# Slide 2
+
+foobar
+```
 ---
 <style>
 h1 {font-size: 40px;}
-{font-size: 20px;}
+h2 {font-size: 30px}
+{font-size: 28px;}
 </style>
-# 前提
+# 自己紹介
 
-* PC、Eye Tracker 4C が手元にある。
-* ソフト類のインストールができる
-* やっていたことをある程度知っている。
-
-上記を満たす方向けの資料です。
-
----
-<!--
-
--->
-# 大まかな流れ
-
-1. 必要なソフトのインストール
-2. 実行環境の整備
-3. コードの実行
+* yu340102
+* とある高専卒
+* T大M2
+* 生活道路での自動運転実現に関する研究
+* 研究では機械学習とかあまりしていない
+* 大学院の授業でデータサイエンスに関する授業を取る
 
 ---
-# 確認
 
-"GazeViz4C" フォルダを自身のPCにコピーし、以下の構成になっていることを確認する。
+# きっかけ
 
-GAZEVIZ4C
-│  base.md
-│  README.md
-│  sms.yml
-│  
-├─code
-│     eyetracker4c.py
-│     gazeheatplot.py
-│     run.py
-│     step_by_step.py
-│          
-├─data
-│      
-├─image
-│      
-└─reference
-        
+* 就活で athletics に登録 -> Slack でコンペのことを知る
+* 第4回Brain(s)に参加 -> 序盤に一瞬LB載る程度
+* Award会に参加 -> めちゃくちゃ化学に詳しい人ではなく，色々試した人が入賞していた  
+-> 第5回（今回）はリベンジのつもりで入賞目指して，参加した．
 
 ---
-# 必要なソフトのインストール
 
-* Tobii Eye Tracking Core Software
-    * Eye Tracking のために必要なコア機能を提供するソフト
-    * 4C からデータを取得するために必要
-    * キャリブレーションもこれで行う
-* Anaconda
-    * Python 本体と実行のために必要なパッケージを簡単に管理できるソフト
-    * コードを実行するために必要
+# 参加するにあたって
 
-上記二点のソフトを公式HPもしくは、"installer"フォルダの.exeファイル実行してインストールする。
+* テーブルデータ分析の基本を一通りやるつもりでいた
+* ドメイン知識は分からないから考えないことにした
+* 全力出し切って，特徴量生成～モデルのチューニングまで一通りできたら感無量というスタンス
 
 ---
-# 実行環境の整備
 
-## Python 環境の構築
-1. Windowsキーを押し、Anaconda Prompt (anaconda3) と入力し、実行する。
-2. 下記を順番に入力しエンター  
-    1. cd GazeViz4C/ （指定のフォルダに移動  ）
-    2. conda env create -f=sms.yml （必要な環境を再構築）  
-    3. conda activate sms （実行環境をアクティベート）
+# 結論
 
-## Tobii Eye Tracker のキャリブレーション
-* reference\tobii_Eye_Tracking.pdf の8番までを参考に設定を完了させる．
-* コードを実行する際は，有効になっていることを確認する．
-
----
-# コードの実行1
-
-* 場所：code/step_by_step.py
-* 概要：4Cを認識し，5秒間ディスプレイ上の左右の目のXY座標をコマンドライン上に出力する.
-* コマンド
-cd code/
-python step_by_step.py
-* イメージ
-![w:600](image/step_by_step.png)
+**情報収集×試行回数=>1st**
+* 基礎情報
+    * Kaggleで勝つデータ分析の技術
+    * 各ライブラリのDocument
+* ドメイン情報
+    * Slackの過去メッセージ
+    * 第4回解法ブログ
+    * RDKit, mordred, FingerPrintに関するQiita等のまとめ記事
+* 試行回数
+    * とにかくsub
+    * 何かやれることはないか考える
+**=1st**
 
 ---
-# コードの実行2-1
 
-* 場所：code/run.py
-* 概要
-    1. 4Cを認識
-    2. 画面のスクリーンショットを撮影
-    3. 30秒間の視線位置座標をcsvファイルに記録
-    4. 2.で撮影した画像に3.で保存したデータをもとにHeatMapを描画
-    （data/ にスクリーンショット画像，csvファイル，HeatMap画像を保存）
-* コマンド
-cd code/
-python run.py
+# ベストスコア
+
+画像を挿入
+* 特徴量は291
+* モデルはMLPRegressor(from sklearn)
+* 5-fold CV の平均値を提出
+
 ---
-# コードの実行2-2
 
-* イメージ
-![w:800](image/sample_output.png)
+# 概要
+
+* 特徴量生成
+    * 記述子（RDKit, mordred）
+    * フィンガープリント（Morgan FP, MACCS Keys）
+    * Count（各原子や記号（=,-,+等），SMILESの文字列長）
+* 特徴量選択
+    * 0のカラムを除去
+    * LightGBMのfeature importance(gainで高いもの)
+    * RDKitの記述子 + MACCS Keys + Count = 291変数
+* モデル選択
+    * 基本LGBM
+    * sklearnにMLPあること知って後から採用
+    * パラメータはどっかのタイミングでColab + Optunaでやったもの
+* アンサンブル
+    * 5-fold CV の平均
+    * LGBM+MLP+SVR->LinearReg のstackingとかも試したけどベストスコアではなかった
+
 ---
-# なんかうまくいかなかったら
 
-* tobii eye tracking が実行されているか確認．
-* 視行動が認識されているか確認．
-タスクバーのtobii eye tracking のアイコンが××になっていると測定できる角度や位置に座れていない可能性が高い．
-* pythonの仮想環境がアクティベートされているか確認．
-(sms)が頭に表示されいていないと，実行できる環境がアクティベートされていない．
-'conda activate sms' を実行しよう．
-* カレントディレクトリを確認．
-/GazeViz4C/code に移動した状態での実行を想定している．現在位置を確認しよう．
+# 大変だったこと
+
+* 一回も中間ランキングに載らなかった
+* trackのスコアばかり良くなる  
+-> 0.15台
+* 採点ルール分かっていなかった  
+-> 画像挿入
+
+---
+
+# まとめと感想
+
+* 色々試したらたまたまいいスコアが出た
+* 今後はもっと**分析**して結果を出したい
+* リベンジできてめちゃくちゃ嬉しい
+* 化学分からなくても何とかなった
+* ルールはよく確認したい
+* (データ分析コンペは無料のソシャゲ...？ 本業に支障がないようにしたい)
+* 解法について，ブログと書いてみたいなあ
+
+---
+
+# memo
+
+## ＜発表資料＞
+　①自己紹介：実名は伏せてください。●●大 HN　で大丈夫です。
+　　　　　　　研究テーマなど
+　②このコンテストを知ったきっかけ／期待していたこと
+　③解法説明
+　　・使用モデル／工夫／苦労／息抜き方法など
+　④まとめ／感想

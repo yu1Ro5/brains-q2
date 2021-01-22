@@ -1,53 +1,22 @@
 ---
 marp: true
-theme: gaia
-_class: lead
+theme: test
+---
+<!-- _class: title -->
+
+# Q2 解法について
+
+～どうやってリベンジを果たしたのか～
+
+![bg brightness:0.6](eva.jpg)
+
+---
+<!--
+class: slides
+footer: "**2021/01/22**"
 paginate: true
-style: |
-    h1, h2, h3, h4, h5, header, footer {
-        color: black;
-    }
-    section {
-        # background-color: white;
-        font-family: 'Noto Sans CJK JP Regular';
-        color: black;
-        font-size: 18px;
-    }
-# backgroundColor: #fff
-# backgroundImage: url('https://marp.app/assets/hero-background.jpg')
----
-
-![bg left:40% 80%](https://marp.app/assets/marp.svg)
-
-# **Marp**
-
-Markdown Presentation Ecosystem
-
-https://marp.app/
-
----
-
-# How to write slides
-
-Split pages by horizontal ruler (`---`). It's very simple! :satisfied:
-
-```markdown
-# Slide 1
-
-foobar
-
----
-
-# Slide 2
-
-foobar
-```
----
-<style>
-h1 {font-size: 40px;}
-{font-size: 20px;}
-</style>
-# 自己紹介
+-->
+# あなたはどんな人？
 
 * yu340102
 * とある高専卒
@@ -55,10 +24,14 @@ h1 {font-size: 40px;}
 * 生活道路での自動運転実現に関する研究
 * 研究では機械学習とかあまりしていない
 * 大学院の授業でデータサイエンスに関する授業を取る
+* 最近はRFAと桃鉄が熱い
+* twitter: @yu340102
 
 ---
 
-# きっかけ
+![bg right:50% 80%](./brains4_lb.png)
+
+# 何で参加したの？
 
 * 就活で athletics に登録 -> Slack でコンペのことを知る
 * 第4回Brain(s)に参加 -> 序盤に一瞬LB載る程度
@@ -67,7 +40,7 @@ h1 {font-size: 40px;}
 
 ---
 
-# 参加するにあたって
+# どんなこと考えて取り組んだの？
 
 * テーブルデータ分析の基本を一通りやるつもりでいた
 * ドメイン知識は分からないから考えないことにした
@@ -75,26 +48,28 @@ h1 {font-size: 40px;}
 
 ---
 
-# 結論
+![bg right:50% 50%](http://image.gihyo.co.jp/assets/images/cover/2019/9784297108434.jpg)
 
-**情報収集×試行回数=>1st**
+# 結論から言ってよ
+
+## **情報収集 × 試行回数 → 1st**
 * 基礎情報
-    * Kaggleで勝つデータ分析の技術
-    * 各ライブラリのDocument
+ Kaggleで勝つデータ分析の技術
+ 各ライブラリのDocument
 * ドメイン情報
-    * Slackの過去メッセージ
-    * 第4回解法ブログ
-    * RDKit, mordred, FingerPrintに関するQiita等のまとめ記事
+   Slackの過去メッセージ
+   第4回解法ブログ
+   RDKit, mordred, FingerPrintに関するQiita等のまとめ記事
 * 試行回数
-    * とにかくsub
-    * 何かやれることはないか考える
-**=1st**
+   とにかくsub
+   何かやれることはないか考える
 
 ---
 
+![bg right:60% 90%](flowchart.png)
+
 # ベストスコア
 
-画像を挿入
 * 特徴量は291
 * モデルはMLPRegressor(from sklearn)
 * 5-fold CV の平均値を提出
@@ -104,20 +79,20 @@ h1 {font-size: 40px;}
 # 概要
 
 * 特徴量生成
-    * 記述子（RDKit, mordred）
-    * フィンガープリント（Morgan FP, MACCS Keys）
-    * Count（各原子や記号（=,-,+等），SMILESの文字列長）
+  記述子（RDKit, mordred）
+  フィンガープリント（Morgan FP, MACCS Keys）
+  Count（各原子や記号（=,-,+等），SMILESの文字列長）
 * 特徴量選択
-    * 0のカラムを除去
-    * LightGBMのfeature importance(gainで高いもの)
-    * RDKitの記述子 + MACCS Keys + Count = 291変数
+  0のカラムを除去
+  LightGBMのfeature importance(gainで高いもの)
+  RDKitの記述子 + MACCS Keys + Count = 291変数
 * モデル選択
-    * 基本LGBM
-    * sklearnにMLPあること知って後から採用
-    * パラメータはどっかのタイミングでColab + Optunaでやったもの
+  基本LGBM
+  sklearnにMLPあること知って後から採用
+  パラメータはどっかのタイミングでColab + Optunaでやったもの
 * アンサンブル
-    * 5-fold CV の平均
-    * LGBM+MLP+SVR->LinearReg のstackingとかも試したけどベストスコアではなかった
+  5-fold CV の平均
+  LGBM+MLP+SVR->LinearReg のstackingとかも試したけどベストスコアではなかった
 
 ---
 
@@ -125,9 +100,9 @@ h1 {font-size: 40px;}
 
 * 一回も中間ランキングに載らなかった
 * trackのスコアばかり良くなる  
--> 0.15台
+  → 0.15台
 * 採点ルール分かっていなかった  
--> 画像挿入
+  → 画像挿入
 
 ---
 
@@ -140,15 +115,3 @@ h1 {font-size: 40px;}
 * ルールはよく確認したい
 * (データ分析コンペは無料のソシャゲ...？ 本業に支障がないようにしたい)
 * 解法について，ブログと書いてみたいなあ
-
----
-
-# memo
-
-＜発表資料＞
-　①自己紹介：実名は伏せてください。●●大 HN　で大丈夫です。
-　　　　　　　研究テーマなど
-　②このコンテストを知ったきっかけ／期待していたこと
-　③解法説明
-　　・使用モデル／工夫／苦労／息抜き方法など
-　④まとめ／感想

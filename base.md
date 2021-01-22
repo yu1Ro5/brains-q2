@@ -1,6 +1,6 @@
 ---
 marp: true
-theme: gaia
+theme: future
 header: "**Eye Tracker 4C 引継ぎ**"
 footer: "by **Yuichiro Shimizu**"
 paginate: True

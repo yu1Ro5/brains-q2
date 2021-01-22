@@ -1,0 +1,35 @@
+/* @theme future */
+
+@import 'default';
+
+section {
+	width: 1920px;
+	height: 1080px;
+	font-size: 40px;
+	padding: 40px;
+	/* background-image: url(https://marp.app/assets/marp.svg); */
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+header {
+	width: 100%;
+	padding: 1px;
+	color: palevioletred;
+	background: linear-gradient(to right, palevioletred, white);
+	top: 120px;
+}
+
+footer {
+	width: 100%;
+	background-color: silver;
+	color: black;
+	text-align: left;
+	padding: 15px;
+	font-style: oblique;
+}
+
+h1 {
+	font-size: 90px;
+	color: #09c;
+}
